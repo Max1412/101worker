@@ -471,3 +471,4 @@ node_modules
 /modules/validate/subtyping_errors.json
 /libraries/mediawiki/.goutputstream-KX73TW
 .idea
+.DS_STORE
