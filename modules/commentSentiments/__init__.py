@@ -11,13 +11,15 @@ import os
 import re
 
 def singleline_comment_length(lang):
-    if lang == "Python":
+    if lang in ["Python", "Perl", "Ruby"]:
         return 1
     return 2
 
 def multiline_comment_start_length(lang):
     if lang == "Python":
         return 3
+    if lang == "HTML":
+        return 4
     if lang == "Ruby":
         return 6
     return 2
@@ -25,44 +27,46 @@ def multiline_comment_start_length(lang):
 def multiline_comment_end_length(lang):
     if lang == "Python":
         return 3
+    if lang == "HTML":
+        return 3
     if lang == "Ruby":
         return 4
     return 2
 
 def is_comment_start_candidate(comment, lang):
-    if comment == "/" and lang in ["Java"]:
+    if comment == "/" and lang in ["Java", "CPlusPlus", "CSS", "PHP", "Scala", "JavaScript", "CSharp"]:
         return True
     if comment == "{" and lang == "Haskell":
         return True
     return False
 
 def is_comment_end_candidate(comment, lang):
-    if comment == "*" and lang in ["Java"]:
+    if comment == "*" and lang in ["Java", "CPlusPlus", "CSS", "PHP", "Scala", "JavaScript", "CSharp"]:
         return True
     if comment == "-" and lang == "Haskell":
         return True
     return False
 
 def is_comment_start(comment, lang):
-    if comment == "#" and lang == "Python":
+    if comment == "#" and lang in ["Python", "PHP", "Perl", "Ruby"]:
         return True, 1
-    if comment == "//" and lang in ["Java"]:
+    if comment == "//" and lang in ["Java", "CPlusPlus", "PHP", "Scala", "JavaScript", "CSharp"]:
         return True, 2
     if comment == "--" and lang == "Haskell":
         return True, 2
     return False, 0
 
 def is_multiline_comment_start(comment, lang):
-    if comment == "/*" and lang in ["Java"]:
+    if comment == "/*" and lang in ["Java", "CPlusPlus", "CSS", "PHP", "Scala", "JavaScript", "CSharp"]:
         return True, 2
     if comment == "{-" and lang == "Haskell":
         return True, 2
     return False, 0
 
 def is_multiline_comment_end(comment, lang):
-    if comment == "*/" and lang in ["Java"]:
-        return True, 2
     if comment == "-}" and lang == "Haskell":
+      return True, 2
+    if comment == "*/" and lang in ["Java", "CPlusPlus", "CSS", "PHP", "Scala", "JavaScript", "CSharp"]:
         return True, 2
     return False, 0
 
@@ -122,6 +126,9 @@ def find_special_multiline_comments(source, lang):
     elif lang == "Ruby":
         comment_start = ['=begin']
         comment_end = ['=end']
+    elif lang == "HTML":
+        comment_start = ['<!--']
+        comment_end = ['-->']
     else:
         return []
     start = 0
@@ -174,7 +181,7 @@ def run(context, res):
         if f.startswith('contributions' + os.sep):
             contribution = f.split(os.sep)[1]
             source = context.get_primary_resource(f)
-            #lang = "Java" 
+            #lang = "Java"
             lang = context.get_derived_resource(f, "lang")
             comments = []
             comments += find_comments(source, lang)
