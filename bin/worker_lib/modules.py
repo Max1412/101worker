@@ -8,19 +8,9 @@ def import_module(module_name):
     return importlib.import_module(module_name)
 
 modules = [
-    'pull',
+    'contributionCommentFilter',
+    'commentSentiments',
     'matchLanguage',
-    'extractFacts',
-    'dumpMongoDBToJson',
-    'convertMongoDump',
-    'packageFrequency',
-    'languageFrequency',
-    'simpleLOC',
-    'locPerContribution',
-    'wiki2tagclouds',
-    'moretagclouds',
-    'zip',
-    'mongodump'
 ]
 
 modules = [import_module(module) for module in modules]
