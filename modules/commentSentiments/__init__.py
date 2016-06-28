@@ -51,7 +51,8 @@ def plotSentiments(pp, title, with_neutral, data, total_scores):
     ax.set_ylabel('Average scores')
     ax.set_title(title)
     ax.set_xticks(ind + elements/2.*width)
-    ax.set_xticklabels(legend)
+    lsize = 1.0/N * 8.0 + 10.0
+    ax.set_xticklabels(legend, fontsize=lsize)
     ax.yaxis.grid(True, linestyle='--', which='major',
                    color='grey', alpha=.25)
     if with_neutral:
