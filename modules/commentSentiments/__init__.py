@@ -10,8 +10,9 @@ config = {
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
-def plotSentiments(title, with_neutral, data):
+def plotSentiments(pp, title, with_neutral, data):
     neutrals = []
     compounds = []
     negatives = []
@@ -25,7 +26,7 @@ def plotSentiments(title, with_neutral, data):
             negatives += [average_scores_data['neg']]
             positives += [average_scores_data['pos']]
             legend += [l]
-    
+
     fig, ax = plt.subplots()
     fig.canvas.set_window_title(title)
     N = len(legend)
@@ -52,7 +53,8 @@ def plotSentiments(title, with_neutral, data):
     else:
         ax.legend((positive_bar[0], negative_bar[0], compound_bar[0]), ('positive', 'negative', 'compound'))
     ax.autoscale_view()
-    plt.show()
+    #plt.show()
+    plt.savefig(pp, format='pdf')
 
 def run(context):
     pages = context.read_dump('wiki-links')
@@ -112,9 +114,12 @@ def run(context):
             else:
                 average_scores[key] = scores[l][key]/num_sentences[l]
         language_sentiments[l]['averageScores'] = average_scores
-    
-    plotSentiments("Contribution comment sentiments", False, contribution_sentiments)
-    plotSentiments("Language comment sentiments", False, language_sentiments)
+
+    pp = PdfPages(context.get_env('dumps101dir') + '/multipage.pdf')
+    plotSentiments(pp, "Contribution comment sentiments", False, contribution_sentiments)
+    plotSentiments(pp, "Language comment sentiments", False, language_sentiments)
+
+    pp.close()
 
 import unittest
 from unittest.mock import Mock, patch
