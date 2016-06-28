@@ -11,6 +11,7 @@ modules = [
     'contributionCommentFilter',
     'commentSentiments',
     'matchLanguage',
+    'dumpMongoDBToJson',
 ]
 
 modules = [import_module(module) for module in modules]
