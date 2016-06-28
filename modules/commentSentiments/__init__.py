@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
-def plotSentiments(pp, title, with_neutral, data):
+def plotSentiments(pp, title, with_neutral, data, total_scores):
     neutrals = []
     compounds = []
     negatives = []
@@ -38,20 +38,26 @@ def plotSentiments(pp, title, with_neutral, data):
     ind = np.arange(N)
     if with_neutral:
         neutral_bar = ax.bar(ind, neutrals, width, color='r')
+        ax.axhline(total_scores['neu'], color='r', alpha=0.5)
         offset += width
     positive_bar = ax.bar(ind + offset, positives, width, color='g')
+    ax.axhline(total_scores['pos'], color='g', alpha=0.5)
     offset += width
     negative_bar = ax.bar(ind + offset, negatives, width, color='r')
+    ax.axhline(total_scores['neg'], color='r', alpha=0.5)
     offset += width
     compound_bar = ax.bar(ind + offset, compounds, width, color='b')
+    ax.axhline(total_scores['compound'], color='b', alpha=0.5)
     ax.set_ylabel('Average scores')
     ax.set_title(title)
     ax.set_xticks(ind + elements/2.*width)
     ax.set_xticklabels(legend)
+    ax.yaxis.grid(True, linestyle='--', which='major',
+                   color='grey', alpha=.25)
     if with_neutral:
-        ax.legend((neutral_bar[0], positive_bar[0], negative_bar[0], compound_bar[0]), ('neutral', 'positive', 'negative', 'compound'))
+        fig.legend((neutral_bar[0], positive_bar[0], negative_bar[0], compound_bar[0]), ('neutral', 'positive', 'negative', 'compound'), 'upper right')
     else:
-        ax.legend((positive_bar[0], negative_bar[0], compound_bar[0]), ('positive', 'negative', 'compound'))
+        fig.legend((positive_bar[0], negative_bar[0], compound_bar[0]), ('positive', 'negative', 'compound'), 'upper right')
     ax.autoscale_view()
     #plt.show()
     plt.savefig(pp, format='pdf')
@@ -83,41 +89,79 @@ def run(context):
                         break;
 
     contributions = {}
+    devs = {}
     for item in pages:
         if "p" in item.keys() and item["p"] == "Contribution":
-            if "n" in item.keys() and "internal_links" in item.keys():
-                title = item["n"]
-                contributions[title] = []
-                for l in languages:
-                    contributions[title] += [l] if "Uses::Language:"+l in item["internal_links"] else []
+            if "n" in item.keys():
+                if "internal_links" in item.keys():
+                    title = item["n"]
+                    contributions[title] = []
+                    for l in languages:
+                        contributions[title] += [l] if "Uses::Language:"+l in item["internal_links"] else []
+                if "DevelopedBy" in item.keys():
+                    devs[title] = []
+                    for dev in item["DevelopedBy"]:
+                        devs[title] += [dev['n']]
 
     contribution_sentiments = context.read_dump('contributionCommentFilter')
-    num_sentences = {}
-    scores = {}
+    lang_num_sentences = {}
+    lang_scores = {}
+    dev_num_sentences = {}
+    dev_scores = {}
+    total_scores = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
+    total_sentences = 0
     for c, data in contribution_sentiments.items():
+        total_sentences += data['sentences']
+        for k in total_scores:
+            total_scores[k] += data['scores'][k]
         lang = contributions[c]
         for l in lang:
-            if not l in num_sentences:
-                num_sentences[l] = 0
-            num_sentences[l] += data['sentences']
-            if not l in scores:
-                scores[l] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
-            for k in scores[l]:
-                scores[l][k] += data['scores'][k]
+            if not l in lang_num_sentences:
+                lang_num_sentences[l] = 0
+            lang_num_sentences[l] += data['sentences']
+            if not l in lang_scores:
+                lang_scores[l] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
+            for k in lang_scores[l]:
+                lang_scores[l][k] += data['scores'][k]
+        dev = devs[c]
+        for d in dev:
+            if not d in dev_num_sentences:
+                dev_num_sentences[d] = 0
+            dev_num_sentences[d] += data['sentences']
+            if not d in dev_scores:
+                dev_scores[d] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
+            for k in dev_scores[d]:
+                dev_scores[d][k] += data['scores'][k]
+    for t in total_scores:
+        if total_sentences == 0:
+            total_scores[t] = 0
+        else:
+            total_scores[t] = total_scores[t]/total_sentences
     language_sentiments = {}
-    for l in num_sentences:
+    for l in lang_num_sentences:
         language_sentiments[l] = {}
         average_scores = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
         for key in average_scores:
-            if num_sentences[l] == 0:
+            if lang_num_sentences[l] == 0:
                 average_scores[key] = 0
             else:
-                average_scores[key] = scores[l][key]/num_sentences[l]
+                average_scores[key] = lang_scores[l][key]/lang_num_sentences[l]
         language_sentiments[l]['averageScores'] = average_scores
+    developer_sentiments = {}
+    for d in dev_num_sentences:
+        developer_sentiments[d] = {}
+        average_scores = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
+        for key in average_scores:
+            if dev_num_sentences[d] == 0:
+                average_scores[key] = 0
+            else:
+                average_scores[key] = dev_scores[d][key]/dev_num_sentences[d]
+        developer_sentiments[d]['averageScores'] = average_scores
 
     pp = PdfPages(context.get_env('dumps101dir') + '/multipage.pdf')
-    plotSentiments(pp, "Contribution comment sentiments", False, contribution_sentiments)
-    plotSentiments(pp, "Language comment sentiments", False, language_sentiments)
+    plotSentiments(pp, "Contribution comment sentiments", False, contribution_sentiments, total_scores)
+    plotSentiments(pp, "Language comment sentiments", False, language_sentiments, total_scores)
+    plotSentiments(pp, "Developer comment sentiments", False, developer_sentiments, total_scores)
 
     pp.close()
 
