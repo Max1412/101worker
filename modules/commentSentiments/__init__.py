@@ -14,22 +14,24 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
 def plotRatio(pp, title, ylabel, data):
-    ratio = []
-    legend = []
+    """ Method for plotting ratios explicitly written for data created during
+    execution of the run method. Plots are saved into the given pdf file."""
+    ratio = [] # height of ratio bars
+    legend = [] # labels at bars
     for l, item_data in data.items():
         if item_data['sentences'] > 0:
             legend += [l]
             ratio += [item_data['nonNeutralSentences']/item_data['sentences']]
+
+    # Create plot with ratio data
     fig, ax = plt.subplots()
     fig.canvas.set_window_title(title)
     N = len(legend)
-    elements = 1
-    width = 1.0/(1.0+elements)
     ind = np.arange(N)
-    ratio_bar = ax.bar(ind, ratio, width, color='g')
+    ratio_bar = ax.bar(ind, ratio, 0.5, color='g')
     ax.set_ylabel(ylabel)
     ax.set_title(title)
-    ax.set_xticks(ind + elements/2.*width)
+    ax.set_xticks(ind + 1/2.*0.5)
     lsize = 1.0/N * 10.0 + 5.0
     ax.set_xticklabels(legend, fontsize=lsize)
     ax.yaxis.grid(True, linestyle='--', which='major',
@@ -38,12 +40,14 @@ def plotRatio(pp, title, ylabel, data):
     plt.savefig(pp, format='pdf')
 
 def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_neutral_scores=False):
+    """Method for plotting sentiment scores. Neutral values can be excluded. Scores can either be non neutral average or actual average."""
     neutrals = []
     compounds = []
     negatives = []
     positives = []
     legend = []
     for l, item_data in data.items():
+        # Create bar data and set legend labels
         average_scores_data = item_data['averageScores']
         if use_non_neutral_scores:
             average_scores_data = item_data['averageNonNeutral']
@@ -129,6 +133,7 @@ def run(context):
 
     contribution_sentiments = context.read_dump('contributionCommentSentiments')
 
+    # Create empty data if contribution_sentiments is empty
     if contribution_sentiments is None:
         context.write_dump('developerCommentSentiments', {})
         context.write_dump('languageCommentSentiments', {})
@@ -148,13 +153,15 @@ def run(context):
     language_sentiments = {}
     developer_sentiments = {}
     for c, data in contribution_sentiments.items():
+        # Create total scores for horizontal lines
         total_sentences += data['sentences']
         total_non_neutral_sentences += data['nonNeutralSentences']
         for k in total_scores:
             total_scores[k] += data['scores'][k]
             total_non_neutral_scores[k] += data['nonNeutralScores'][k]
-        lang = languages[c]
-        for l in lang:
+        # get languages of current contribution
+        for l in languages[c]:
+            # set default values if there are not assigned yet
             if l not in language_sentiments:
                 language_sentiments[l] = {}
                 language_sentiments[l]['sentences'] = 0
@@ -162,14 +169,16 @@ def run(context):
                 language_sentiments[l]['nonNeutralSentences'] = 0
                 language_sentiments[l]['scores'] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
                 language_sentiments[l]['nonNeutralScores'] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
+            # update data of language l
             language_sentiments[l]['sentences'] += data['sentences']
             language_sentiments[l]['tooShortSentences'] += data['tooShortSentences']
             language_sentiments[l]['nonNeutralSentences'] += data['nonNeutralSentences']
             for k in language_sentiments[l]['scores']:
                 language_sentiments[l]['scores'][k] += data['scores'][k]
                 language_sentiments[l]['nonNeutralScores'][k] += data['nonNeutralScores'][k]
-        dev = devs[c]
-        for l in dev:
+        # get devs of current contribution
+        for l in devs[c]:
+            # set default values if there are not assigned yet
             if l not in developer_sentiments:
                 developer_sentiments[l] = {}
                 developer_sentiments[l]['sentences'] = 0
@@ -177,12 +186,14 @@ def run(context):
                 developer_sentiments[l]['nonNeutralSentences'] = 0
                 developer_sentiments[l]['scores'] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
                 developer_sentiments[l]['nonNeutralScores'] = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
+            # update data of developer l
             developer_sentiments[l]['sentences'] += data['sentences']
             developer_sentiments[l]['tooShortSentences'] += data['tooShortSentences']
             developer_sentiments[l]['nonNeutralSentences'] += data['nonNeutralSentences']
             for k in developer_sentiments[l]['scores']:
                 developer_sentiments[l]['scores'][k] += data['scores'][k]
                 developer_sentiments[l]['nonNeutralScores'][k] += data['nonNeutralScores'][k]
+    # Convert total scores to total average scores
     for t in total_scores:
         if total_sentences == 0:
             total_scores[t] = 0
@@ -193,6 +204,7 @@ def run(context):
         else:
             total_non_neutral_scores[t] = total_non_neutral_scores[t]/total_non_neutral_sentences
 
+    # Create averages for language_sentiments
     for l in language_sentiments:
         average_scores = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
         average_non_neutral = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
@@ -206,6 +218,7 @@ def run(context):
         language_sentiments[l]['averageScores'] = average_scores
         language_sentiments[l]['averageNonNeutral'] = average_non_neutral
 
+    # Create averages for developer_sentiments
     for l in developer_sentiments:
         average_scores = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
         average_non_neutral = {"compound": 0, "pos": 0, "neu": 0, "neg": 0}
