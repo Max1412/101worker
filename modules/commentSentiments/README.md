@@ -207,7 +207,76 @@ in its readme file, which is available at the link above.
 The module generates a ... dump, which consists
 of ...
 
-Sample output, explanation
+Here are the generated plots together with an analysis/evaluation of the result:
+**Please note: For more accurate and/or representative results, more contributions must used to generate data
+and all following "conclusions" are drawn from the analyzed contributions only**
+
+![Contribution comment sentiments](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/contribution_comment_sentiments.png?raw=true)
+This is the plot showing the average scores sorted by contribution.
+As you can see, this plot does not show the the neutral score, for easier
+comparison between the much lower positive and neutral values. The
+compound value is a comprehension of the "positive vs negative" value of the
+contribution. 
+The thin horizontal lines are the average of positive, negative and the compound
+in all contributions.
+
+What does this image say about the contributions?
+* On average, the comments are more negative than positive (see the horizontal lines)
+* There are two contributions in the mix which contain no positive comments at all.
+* Only one contribution is actually rated more positive than negative.
+* Both Haskell contributions are very similar!
+* _jdom_ and py3k are very similiar!
+
+At this point we still "don't know", _why_ some contributions are more negative
+than others or even similar... maybe this has something to do with languages or contributors?
+
+![Language comment sentiments](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/language_comment_sentiments.png?raw=true)
+
+This plot shows the same information as the previous one, but ordered by language.
+This also combines the _jdom_ and _javaComposition_ contributions into _Java_.
+
+Now we can see:
+* Python is by far the "most negative language"
+* Even with two very different contributions combined, Java is still very positive
+* The Haskell contributions from the first figure are tagged with different
+versions of haskell in the wiki
+
+![Developer comment sentiments](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/developer_comment_sentiments.png?raw=true)
+
+This figure shows the sentiments ordered by contributor/developer.
+
+Now we can see:
+* Comments by _rlaemmel_ are very close to neutral
+* _tschmorleiz_ writes more positive than negative comments
+* _DerDackel_ writes negative comments only
+
+We also analyzed the ratio of non-neutral comments to total comments:
+![Developer ratio](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/ratio_non%20neutral_sentences_to%20sentences_by_developer.png?raw=true)
+This shows that _DerDackel_ writes not just only negative comments, but has also
+many non-neutral comments in comparison with his overall comments.
+We can also see that _tschmorleiz_ is a very neutral comment-writer.
+But overall, those ratios are not at all very different, only by roughly 10%.
+
+The ratio are also available per contribution and per language:
+![Contribution ratio](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/ratio_non%20neutral_sentences_to%20sentences_by_contribution.png?raw=true)
+![Language ratio](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/ratio_non%20neutral_sentences_to%20sentences_by_language.png?raw=true)
+
+We also plotted the three figures from the beginning with the neutral
+scores, but stripped of the completely neutral comments.
+This means, in the following figures, only the non-neutral comments are
+taken into account.
+
+![Contribution non-neutral](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/non_neutral_contribution_comment_sentiments.png?raw=true)
+![Language non-neutral](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/non_neutral_language_comment_sentiments.png?raw=true)
+![Developer non-neutral](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/non_neutral_developer_comment_sentiments.png?raw=true)
+
+What we can see here is, that even with no completely neutral sentences taken into account,
+ne neutral scores outrank the positive/negative scores by far.
+This means that even the positive or negative comments are **not strongly positive or negative**
+This actually confirms what we expected: Source-Code comments do not contain
+very strong sentiments, and thus are basically very neutral. This is also confirmed
+by the overall low ratios between neutral and non-neutral comments seen in the second type of figures.
+
 
 ## Dependencies
 

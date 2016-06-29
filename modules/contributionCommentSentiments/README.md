@@ -16,6 +16,8 @@ This module assumes the following things:
 reasonable.
 * All comments found in the source code of contributions are some kind of
 sentence or at least close to a sentence.
+* As we use an "untrained" Version of nltk-vader to analyze sentiments,
+we assume this is somewhat accurate.
 
 ## Details
 
