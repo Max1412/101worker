@@ -196,7 +196,7 @@ def run(context):
         developer_sentiments[l]['averageScores'] = average_scores
         developer_sentiments[l]['averageNonNeutral'] = average_non_neutral
 
-    pp = PdfPages(context.get_env('dumps101dir') + '/multipage.pdf')
+    pp = PdfPages(context.get_env('dumps101dir') + '/commentSentiments.pdf')
     plotSentiments(pp, "Contribution comment sentiments", "Average Scores", False, contribution_sentiments, total_scores)
     plotSentiments(pp, "Non neutral contribution comment sentiments", "Average Scores", True, contribution_sentiments, total_non_neutral_scores, True)
     plotSentiments(pp, "Language comment sentiments", "Average Scores", False, language_sentiments, total_scores)
