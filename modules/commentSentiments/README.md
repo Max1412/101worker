@@ -4,11 +4,13 @@ Für die "eigentliche" Dokumentation des Moduls, siehe unten.
 Dies ist die zusätzliche Dokumentation gefordert in https://svn.uni-koblenz.de/softlang/pttcourse/ptt16/lab/doc_requs_ass03.pdf .
 
 ## Gruppeninfo
-* Gruppenname: 
-zuse (https://gitlab.uni-koblenz.de/zuse/pttss16/)
+* Gruppenname: zuse (https://gitlab.uni-koblenz.de/zuse/pttss16/)
 * Mitglieder: 
+
 Alexander Scheid-Rehder, Anna Schneider, Benedikt Kraus, Maximilian Mader, Tim Liß
+
 * Wie sind die Anforderungen für einen Bonus erfüllt worden?
+
 Wir haben schon 2 mal einen Bonus erhalten, die Anforderungen der Vollständigkeit halber trotzdem:
 
 ### Anforderungen:
@@ -29,6 +31,7 @@ nltk, aufbereiten der Daten vor und nach der verarbeitung, Interpretation der Er
 
 ## Aufgabenbeschreibung
 * Wie lautet die Aufgabenstellung? (In eigenen Worten)
+
 Sentimentanalyse (Stimmungsanalye) auf Quellcode-Kommentare anwenden:
 Extrahieren der Kommentare, aufbereiten der Kommentare,
 so dass sie analysiert werden können (trennen/zusammenfügen von Sätzen),
@@ -36,10 +39,12 @@ Daten verarbeiten und dann interessante Zusammenhänge herausfinden und
 zeigen, zum Beispiel als Diagramm.
 
 * Welche Hypothesen können gemacht werden?
+
 Die Hypothesen bezüglich der Auswertung werden in der "eigentlichen" Dokumentation
 beschrieben, genau wie die Annahmen, auf denen unsere Module basieren.
 
 * Welche Erwartungen habt ihr?
+
 Wir erwarten, dass Quellcode-Kommentare nicht besonders "wertend" und
 weitgehend neutral sind.
 Wir erwarten außerdem, dass sich trotzdem ein gewisser Unterschied zwischen
@@ -50,6 +55,7 @@ als Haskell-Kommentare sind)
 
 ## Vorgehen
 * Wie seid ihr vorgegangen?
+
 Wir haben uns zuerst damit beschäftigt, die Kommentare aus dem Quellcode
 zu extrahieren (siehe Modul [contributionCommentFilter](https://github.com/Max1412/101worker/tree/master/modules/contributionCommentFilter)).
 Damach haben wir diese aufbereitet, so dass wir ganze Sätze haben
@@ -60,6 +66,7 @@ Die analysierten Daten haben wir dann auf verschiedene Arten und Weisen
 geplottet und gespeichert.
 
 * Auf welche Schwierigkeiten seid ihr gestoßen?
+
 Beim extrahieren der Kommentare war es schwierig, alle möglichen
 Kommentare und Kommentar-Stile abzudecken, also nicht nur die Unterstützung 
 für Kommentarzeichen in Programmiersprachen, aber etwa Kommentare, vor denen
@@ -81,18 +88,21 @@ Wir hoffen, unsere Lösung hebt sich genug von den anderen ab. Wir haben
 unseren Code selbst geschrieben.
 
 * Auf welche Aspekte habt ihr euch eingeschränkt und warum?
+
 Die Kommentare sind auf die Programmiersprachen (mehr dazu siehe Modul-readme)
 eingeschränkt. Wir haben uns auf die Programmiersprachen konzentriert,
 mit denen die Test-Contributions geschrieben sind, und noch einige andere
 mit abgedeckt.
 
 * Welche Alternativen gibt es noch?
+
 Alternative libraries, trainieren des sentiment-analyzer, Auswertung anderer
 Daten, ...
 
 
 ## Dateimanagement
 * Wo liegen die Dateien für das Assignment?
+
 Repo: https://github.com/Max1412/101worker/
 
 Module: 
@@ -103,11 +113,13 @@ Readme:
 diese Datei + Readmes der Module
 
 * Was sind Input und Output? / Wie sind die Strukturen der Outputs?
+
 Siehe Readmes der einzelnen Module. Dort werden Input und Output genannt
 und mit Beispielen erklärt (siehe unten für dieses Modul)
 
 ## Auswertung
 * Disskussion/Interpretation der Ergebnisse?
+
 Beschreibung der Ausgabe in der _Details_-Section der Modul-Readmes
 (für dieses Moduls siehe unten). Zusammenfassend lässt sich sagen
 dass die Ergebnisse wegen der Einagbedaten nicht ideal sind,
@@ -118,6 +130,7 @@ werden allerdings noch mal genauer beschrieben (siehe unten)
 
 * Welche Darstellungen/Abbildungen für die Ergebnisse wurden gewählt
 und warum?
+
 Wir haben uns für eine grafische Darstellung der Ergebnisse,
 überwiegend als Säulendagramm, entschieden. So lassen sich
 verschiedene Werte gut vergleichen und wir haben zusätzlich Linien für
@@ -125,6 +138,7 @@ Durchschnittswerte, damit man direkt sieht, ob ein Wert eher über- oder
 utnerdurchschnittlich ist.
 
 * Stimmen die Ergebnisse mit den Erwartungen überein und warum?
+
 Unsere Erwartung, das Code-Kommentare oft recht neutral sind, hat sich bestätigt.
 Für die Vergleiche von Programmiersprachen, Contributions und Contributors
 hatten wir nicht wirklich spezielle Erwartungen, außer, dass es tatsächlich
@@ -132,6 +146,7 @@ Unterschiede geben wird. Das hat sich ebenfalls bewahrheitet
 
 ## Anleitung zur Ausführung
 * Wie bringt man das Programm zum laufen?
+
 Man installiert den 101worker (Anleitung siehe https://github.com/Max1412/101worker/)
 und führt dann die Module mit ```python bin/run_module <module>```
 aus. Module zum Ausführen: 
@@ -140,14 +155,17 @@ contributionCommentFilter (von uns),
 commentSentiments (von uns, Haupt-Modul),
 
 * Gibt es Besonderheiten oder Abhängigkeiten?
+
 Die Abhänigkeiten der einzelnen Module (inklusive benötigte pip-packages)
 stehen in den readmes der jeweilgen Module.
 
 * Was wurde alles getestet?
+
 Alle unsere Module haben wie in Assignment 2 ihre eigenen Test-Cases.
 
 ## Dokumentation im Quellcode
 * Ausreichende Kommentare im Source-Code?
+
 Siehe Quellcode.
 
 
