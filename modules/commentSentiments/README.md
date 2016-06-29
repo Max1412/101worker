@@ -180,9 +180,7 @@ Necessary python packages for this module are:
 * numpy
 * (nltk for contributionCommentSentiments, on which this module depends)
 
-These must be installed before executing the module. The necessary word
-tables for nltk-vader are downloaded automatically the first time
-the module is run. TODO put this in readme of other module
+These must be installed before executing the module. 
 
 This is the readme file for our *main* module _commentSentiments_.
 We also implemented the following module, which is used to distribute the

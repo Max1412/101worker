@@ -232,8 +232,8 @@ This data is categorized by contribution to ensure further processing is possibl
 def run(context, res):
 
     # download nltk lists (if not already downloaded)
-    # nltk.download('punkt')
-    # nltk.download('vader_lexicon')
+    nltk.download('punkt')
+    nltk.download('vader_lexicon')
 
     data = context.read_dump('contributionCommentSentiments')
 
