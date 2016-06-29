@@ -204,8 +204,17 @@ in its readme file, which is available at the link above.
 
 ## Details
 
-The module generates a ... dump, which consists
-of ...
+The module generates two types of output:
+* a commentSentiments.pdf file which contains the graphics found below
+* two dumps: developerCommentSentiments.json and languageCommentSentiments.json
+Those dumps contain the information which is graphically presented in the pdf file,
+making it available for further processing.
+
+What this module basically does is: It is taking the contributionCommentSentiments dump and
+combines it with information found in the wiki, eg. to combine the contributions
+written by the same contributor.
+Also, a main part of this module is after combining the data and calculating
+scores, it plots the information and writes it to a pdf file.
 
 Here are the generated plots together with an analysis/evaluation of the result:
 **Please note: For more accurate and/or representative results, more contributions must used to generate data
@@ -282,8 +291,7 @@ by the overall low ratios between neutral and non-neutral comments seen in the s
 
 ## Dependencies
 
-This module relies on the dump from the modules _matchLanguage_ and
-_contributionCommentSentiments_ and their respective dependencies.
+This module relies on the dump from the module _contributionCommentSentiments_ and their respective dependencies.
 It also uses the wiki-links dump.
 
 ## Issues
