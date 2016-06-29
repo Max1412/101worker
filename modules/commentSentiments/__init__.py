@@ -88,6 +88,7 @@ def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_
         fig.legend((positive_bar[0], negative_bar[0], compound_bar[0]), ('positive', 'negative', 'compound'), 'upper right')
     ax.autoscale_view()
     plt.savefig(pp, format='pdf')
+    plt.savefig(title)
 
 
 def run(context):
@@ -283,6 +284,12 @@ class CommentSentiments(unittest.TestCase):
                              "Uses::Technology:JUnit",
                              "Uses::Technology:Gradle",
                              "DevelopedBy::Contributor:rlaemmel"
+                         ],
+                         "DevelopedBy": [
+                             {
+                                 "n": "rlaemmel",
+                                 "p": "Contributor"
+                             }
                          ],
                     }
                 ]
