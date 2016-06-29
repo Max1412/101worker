@@ -38,6 +38,7 @@ def plotRatio(pp, title, ylabel, data):
                    color='grey', alpha=.25)
     ax.autoscale_view()
     plt.savefig(pp, format='pdf')
+    
 
 def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_neutral_scores=False):
     """Method for plotting sentiment scores. Neutral values can be excluded. Scores can either be non neutral average or actual average."""
