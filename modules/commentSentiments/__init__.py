@@ -103,16 +103,7 @@ def run(context):
                         devs[title] += [dev['n']]
 
     contribution_sentiments = context.read_dump('contributionCommentSentiments')
-    lang_num_sentences = {}
-    lang_num_non_neutral_sentences = {}
-    lang_num_too_short_sentences = {}
-    lang_scores_non_neutral = {}
-    lang_scores = {}
-    dev_num_sentences = {}
-    dev_num_non_neutral_sentences = {}
-    dev_num_too_short_sentences = {}
-    dev_scores_non_neutral = {}
-    dev_scores = {}
+    
     # total scores are used to create an overall average displayed in the bar
     # chart plotted to simplify grading of displayed data in realtion to overall
     # data in the chart.
