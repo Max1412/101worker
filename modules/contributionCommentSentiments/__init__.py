@@ -235,7 +235,7 @@ def run(context, res):
     # nltk.download('punkt')
     # nltk.download('vader_lexicon')
 
-    data = context.read_dump('contributionCommentFilter')
+    data = context.read_dump('contributionCommentSentiments')
 
     if data is None:
         data = {}
@@ -254,8 +254,8 @@ def run(context, res):
         data[contribution] = {}
     if data[contribution].get("sentences", None) is not None:
         num_sentences = data[contribution]["sentences"]
-    if data[contribution].get("shortSentences", None) is not None:
-        num_too_short_sentences = data[contribution]["shortSentences"]
+    if data[contribution].get("tooShortSentences", None) is not None:
+        num_too_short_sentences = data[contribution]["tooShortSentences"]
     if data[contribution].get("nonNeutralSentences", None) is not None:
         num_without_neutral = data[contribution]["nonNeutralSentences"]
     if data[contribution].get("scores", None) is not None:
