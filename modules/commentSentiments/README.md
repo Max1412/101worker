@@ -57,11 +57,12 @@ als Haskell-Kommentare sind)
 * Wie seid ihr vorgegangen?
 
 Wir haben uns zuerst damit beschäftigt, die Kommentare aus dem Quellcode
-zu extrahieren (siehe Modul [contributionCommentFilter](https://github.com/Max1412/101worker/tree/master/modules/contributionCommentFilter)).
-Damach haben wir diese aufbereitet, so dass wir ganze Sätze haben
+zu extrahieren .
+Dnmach haben wir diese aufbereitet, so dass wir ganze Sätze haben
 (also Sätze, die über mehrere Zeilen gehen zusammengesetzt, Sätze getokenized usw.)
 und haben unnötige Dinge rausgefiltert (@author-Tags usw.), um sie
 mit nltk-vader zu analysieren.
+(siehe Modul [contributionCommentSentiments](https://github.com/Max1412/101worker/tree/master/modules/contributionCommentSentiments))
 Die analysierten Daten haben wir dann auf verschiedene Arten und Weisen
 geplottet und gespeichert.
 
@@ -106,7 +107,7 @@ Daten, ...
 Repo: https://github.com/Max1412/101worker/
 
 Module: 
-https://github.com/Max1412/101worker/tree/master/modules/contributionCommentFilter
+https://github.com/Max1412/101worker/tree/master/modules/contributionCommentSentiments
 https://github.com/Max1412/101worker/tree/master/modules/commentSentiments (siehe unten)
 
 Readme:
@@ -151,7 +152,7 @@ Man installiert den 101worker (Anleitung siehe https://github.com/Max1412/101wor
 und führt dann die Module mit ```python bin/run_module <module>```
 aus. Module zum Ausführen: 
 matchLanguage (bereits vohanden),
-contributionCommentFilter (von uns),
+contributionCommentSentiments (von uns),
 commentSentiments (von uns, Haupt-Modul),
 
 * Gibt es Besonderheiten oder Abhängigkeiten?
@@ -175,18 +176,18 @@ Siehe Quellcode.
 A module to ...
 
 Necessary python packages for this module are:
-* nltk
 * matplotlib
 * numpy
+* (nltk for contributionCommentSentiments, on which this module depends)
 
 These must be installed before executing the module. The necessary word
 tables for nltk-vader are downloaded automatically the first time
-the module is run.
+the module is run. TODO put this in readme of other module
 
 This is the readme file for our *main* module _commentSentiments_.
 We also implemented the following module, which is used to distribute the
 work necessary for this module. README files for these modules are also available:
-* _contributionCommentFilter_ (https://github.com/Max1412/101worker/tree/master/modules/contributionCommentFilter)
+* _contributionCommentSentiments_ (https://github.com/Max1412/101worker/tree/master/modules/contributionCommentSentiments)
 
 We also use the already present module _matchLanguage_.
 
@@ -205,7 +206,7 @@ Sample output, explanation
 ## Dependencies
 
 This module relies on the dump from the modules _matchLanguage_ and
-_contributionCommentFilter_ and their respective dependencies.
+_contributionCommentSentiments_ and their respective dependencies.
 
 ## Issues
 

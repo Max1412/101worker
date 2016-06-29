@@ -13,6 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
+
 def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_neutral_scores=False):
     neutrals = []
     compounds = []
@@ -65,6 +66,7 @@ def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_
     ax.autoscale_view()
     plt.savefig(pp, format='pdf')
 
+
 def run(context):
     pages = context.read_dump('wiki-links')
 
@@ -103,7 +105,7 @@ def run(context):
                         devs[title] += [dev['n']]
 
     contribution_sentiments = context.read_dump('contributionCommentSentiments')
-    
+
     # total scores are used to create an overall average displayed in the bar
     # chart plotted to simplify grading of displayed data in realtion to overall
     # data in the chart.
@@ -123,7 +125,7 @@ def run(context):
             total_non_neutral_scores[k] += data['nonNeutralScores'][k]
         lang = languages[c]
         for l in lang:
-            if not l in language_sentiments:
+            if l not in language_sentiments:
                 language_sentiments[l] = {}
                 language_sentiments[l]['sentences'] = 0
                 language_sentiments[l]['tooShortSentences'] = 0
@@ -138,7 +140,7 @@ def run(context):
                 language_sentiments[l]['nonNeutralScores'][k] += data['nonNeutralScores'][k]
         dev = devs[c]
         for l in dev:
-            if not l in developer_sentiments:
+            if l not in developer_sentiments:
                 developer_sentiments[l] = {}
                 developer_sentiments[l]['sentences'] = 0
                 developer_sentiments[l]['tooShortSentences'] = 0
