@@ -253,8 +253,47 @@ from unittest.mock import Mock
 class ContributionCommentFilter(unittest.TestCase):
 
     def setUp(self):
+        primaryResource = "#just a prank\n #bro.\n if hello == True:\n #love.\n '''the quick brown frog jumps over the lazy dog.i love christmas.'''";
+        res = {
+            'file': 'contributions' + os.sep + 'python' + os.sep + 'test.py'
+        }
         self.env=Mock()
+        self.env.read_dump.return_value = {}
+        self.env.get_derived_resource.return_value = "Python"
+        self.env.get_primary_recource.return_value = primaryResource
+
+    def test_run(self):
+        self.env.write_dump.assert_called_with('contributionCommentFilter', {"python": {
+        "sentences": 1,
+        "averageScores": {
+            "compound": 0.4019,
+            "neu": 0.573,
+            "neg": 0.159,
+            "pos": 0.268
+        },
+        "nonNeutralSentences": 1,
+        "tooShortSentences": 3,
+        "nonNeutralScores": {
+            "compound": 0.4019,
+            "neu": 0.573,
+            "neg": 0.159,
+            "pos": 0.268
+        },
+        "averageNonNeutral": {
+            "compound": 0.4019,
+            "neu": 0.573,
+            "neg": 0.159,
+            "pos": 0.268
+        },
+        "scores": {
+            "compound": 0.4019,
+            "neu": 0.573,
+            "neg": 0.159,
+            "pos": 0.268
+        },
+    }})
+
 
 def test():
-    suite = unittest.TestLoader().loadTestsFromTestCase(CommentSentiment)
+    suite = unittest.TestLoader().loadTestsFromTestCase(ContributionCommentFilter)
     unittest.TextTestRunner(verbosity=2).run(suite)
