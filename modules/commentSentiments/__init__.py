@@ -106,6 +106,9 @@ def run(context):
 
     contribution_sentiments = context.read_dump('contributionCommentSentiments')
 
+    if contribution_sentiments is None:
+        contribution_sentiments = {}
+
     # total scores are used to create an overall average displayed in the bar
     # chart plotted to simplify grading of displayed data in realtion to overall
     # data in the chart.

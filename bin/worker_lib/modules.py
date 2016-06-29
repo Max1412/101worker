@@ -8,7 +8,7 @@ def import_module(module_name):
     return importlib.import_module(module_name)
 
 modules = [
-    'contributionCommentFilter',
+    'contributionCommentSentiments',
     'commentSentiments',
     'matchLanguage',
     'dumpMongoDBToJson',
