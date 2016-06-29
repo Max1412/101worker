@@ -5,7 +5,7 @@ Dies ist die zusätzliche Dokumentation gefordert in https://svn.uni-koblenz.de/
 
 ## Gruppeninfo
 * Gruppenname: zuse (https://gitlab.uni-koblenz.de/zuse/pttss16/)
-* Mitglieder: 
+* Mitglieder:
 
 Alexander Scheid-Rehder, Anna Schneider, Benedikt Kraus, Maximilian Mader, Tim Liß
 
@@ -15,8 +15,8 @@ Wir haben schon 2 mal einen Bonus erhalten, die Anforderungen der Vollständigke
 
 ### Anforderungen:
 "all team members leave traces of their work on gitlab/github":
-Siehe commits, bei diesem Assignment haben wir allerdings mehr zusammen an einem PC gearbeitet (à la 4 (oder mehr)-Augen-Programmierung))
-Außerdem war etwas mehr Planungs- und Recherchearbeit als sonst nötig, die von den Mitlgiedern mit weniger/keinen commits übernommen wurde.
+Siehe commits, bei diesem Assignment haben wir allerdings mehr zusammen an einem PC gearbeitet (à la 4 (oder mehr)-Augen-Programmierung)).
+Außerdem war etwas mehr Planungs- und Recherchearbeit als sonst nötig, die von den Mitgliedern mit weniger/keinen commits übernommen wurde.
 
 "the work is explained well in the README.md file which comes with the work":
 Siehe diese Readme und die unten verlinkten Readmes.
@@ -26,7 +26,7 @@ Ebenfalls, siehe "richtige" Dokumentation.
 
 "the work applies concepts of "mining software data" correctly and understandably"
 Wir arbeiten wie in "mining software data" vorgestellt: Nutzen von libraries wie
-nltk, aufbereiten der Daten vor und nach der verarbeitung, Interpretation der Ergebnisse.
+nltk, aufbereiten der Daten vor und nach der Verarbeitung, Interpretation der Ergebnisse.
 
 
 ## Aufgabenbeschreibung
@@ -36,7 +36,7 @@ Sentimentanalyse (Stimmungsanalye) auf Quellcode-Kommentare anwenden:
 Extrahieren der Kommentare, aufbereiten der Kommentare,
 so dass sie analysiert werden können (trennen/zusammenfügen von Sätzen),
 Daten verarbeiten und dann interessante Zusammenhänge herausfinden und
-zeigen, zum Beispiel als Diagramm.
+anzeigen, zum Beispiel als Diagramm.
 
 * Welche Hypothesen können gemacht werden?
 
@@ -49,18 +49,18 @@ Wir erwarten, dass Quellcode-Kommentare nicht besonders "wertend" und
 weitgehend neutral sind.
 Wir erwarten außerdem, dass sich trotzdem ein gewisser Unterschied zwischen
 den verwendeten Sprachen, den Contributors bzw. den Contributions feststellen lässt,
-sind aber unentschlossen, in welche Richtung dieser ausfallen wird
-(kurz gesagt, wir erwarten nicht speziell, dass beispielsweise Java-Kommentare positiver
-als Haskell-Kommentare sind)
+sind aber unentschlossen, in welche Richtung dieser ausfallen wird.
+(Kurz gesagt, wir erwarten nicht speziell, dass beispielsweise Java-Kommentare positiver
+als Haskell-Kommentare sind.)
 
 ## Vorgehen
 * Wie seid ihr vorgegangen?
 
 Wir haben uns zuerst damit beschäftigt, die Kommentare aus dem Quellcode
-zu extrahieren .
-Dnmach haben wir diese aufbereitet, so dass wir ganze Sätze haben
-(also Sätze, die über mehrere Zeilen gehen zusammengesetzt, Sätze getokenized usw.)
-und haben unnötige Dinge rausgefiltert (@author-Tags usw.), um sie
+zu extrahieren.
+Danach haben wir diese aufbereitet, so dass wir ganze Sätze haben
+(also Sätze, die über mehrere Zeilen gehen zusammengesetzt, Sätze tokenized usw.)
+und haben unnötige Kommentare rausgefiltert (@author-Tags usw.), um sie
 mit nltk-vader zu analysieren.
 (siehe Modul [contributionCommentSentiments](https://github.com/Max1412/101worker/tree/master/modules/contributionCommentSentiments))
 Die analysierten Daten haben wir dann auf verschiedene Arten und Weisen
@@ -68,8 +68,8 @@ geplottet und gespeichert.
 
 * Auf welche Schwierigkeiten seid ihr gestoßen?
 
-Beim extrahieren der Kommentare war es schwierig, alle möglichen
-Kommentare und Kommentar-Stile abzudecken, also nicht nur die Unterstützung 
+Beim Extrahieren der Kommentare war es schwierig, alle möglichen
+Kommentare und Kommentar-Stile abzudecken, also nicht nur die Unterstützung
 für Kommentarzeichen in Programmiersprachen, aber etwa Kommentare, vor denen
 Code oder Whitespace steht, Mulitiline-Kommentare als Block-Kommentare und
 als nicht-Block-Kommentare, Kommentare die als Block in einer Code-Zeile
@@ -82,7 +82,7 @@ und Wege zu finden, um darzustellen, was die Daten aussagen.
 Außerdem ist es uns schwer gefallen, uns mit den anderen zwei Gruppen,
 die dieselbe Aufgabe hatten, abzusprechen. Während eine Gruppe
 sehr kommunikativ und kooperativ war und direkt vorgeschlagen hat,
-sich mit einem Machine-Learning-Ansatz von uns abzuheben, hat sich die 
+sich mit einem Machine-Learning-Ansatz von uns abzuheben, hat sich die
 andere Gruppe bis Montag (zwei Tage vor Abgabe) nicht gemeldet und dann
 auch nur sehr kurz gefasst.
 Wir hoffen, unsere Lösung hebt sich genug von den anderen ab. Wir haben
@@ -106,7 +106,7 @@ Daten, ...
 
 Repo: https://github.com/Max1412/101worker/
 
-Module: 
+Module:
 https://github.com/Max1412/101worker/tree/master/modules/contributionCommentSentiments
 https://github.com/Max1412/101worker/tree/master/modules/commentSentiments (siehe unten)
 
@@ -119,11 +119,11 @@ Siehe Readmes der einzelnen Module. Dort werden Input und Output genannt
 und mit Beispielen erklärt (siehe unten für dieses Modul)
 
 ## Auswertung
-* Disskussion/Interpretation der Ergebnisse?
+* Diskussion/Interpretation der Ergebnisse?
 
 Beschreibung der Ausgabe in der _Details_-Section der Modul-Readmes
-(für dieses Moduls siehe unten). Zusammenfassend lässt sich sagen
-dass die Ergebnisse wegen der Einagbedaten nicht ideal sind,
+(für dieses Moduls siehe unten). Zusammenfassend lässt sich sagen,
+dass die Ergebnisse wegen der Eingabedaten nicht ideal sind,
 sich aber trotzdem einiges ablesen lässt: So kommentieren
 manche Programmierer der Module positiver, andere negativer als
 der Durchschnitt. Die Diagramme an sich sind recht aussagekräftig,
@@ -132,28 +132,27 @@ werden allerdings noch mal genauer beschrieben (siehe unten)
 * Welche Darstellungen/Abbildungen für die Ergebnisse wurden gewählt
 und warum?
 
-Wir haben uns für eine grafische Darstellung der Ergebnisse,
-überwiegend als Säulendagramm, entschieden. So lassen sich
+Wir haben uns für eine grafische Darstellung der Ergebnisse als Säulendiagramm entschieden. So lassen sich
 verschiedene Werte gut vergleichen und wir haben zusätzlich Linien für
 Durchschnittswerte, damit man direkt sieht, ob ein Wert eher über- oder
-utnerdurchschnittlich ist.
+unterdurchschnittlich ist.
 
 * Stimmen die Ergebnisse mit den Erwartungen überein und warum?
 
 Unsere Erwartung, das Code-Kommentare oft recht neutral sind, hat sich bestätigt.
 Für die Vergleiche von Programmiersprachen, Contributions und Contributors
 hatten wir nicht wirklich spezielle Erwartungen, außer, dass es tatsächlich
-Unterschiede geben wird. Das hat sich ebenfalls bewahrheitet
+Unterschiede geben wird. Das hat sich ebenfalls bewahrheitet.
 
 ## Anleitung zur Ausführung
 * Wie bringt man das Programm zum laufen?
 
 Man installiert den 101worker (Anleitung siehe https://github.com/Max1412/101worker/)
 und führt dann die Module mit ```python bin/run_module <module>```
-aus. Module zum Ausführen: 
+aus. Module zum Ausführen:
 matchLanguage (bereits vohanden),
 contributionCommentSentiments (von uns),
-commentSentiments (von uns, Haupt-Modul),
+commentSentiments (von uns, Haupt-Modul)
 
 * Gibt es Besonderheiten oder Abhängigkeiten?
 
@@ -184,7 +183,7 @@ Necessary python packages for this module are:
 * numpy
 * (nltk for contributionCommentSentiments, on which this module depends)
 
-These must be installed before executing the module. 
+These must be installed before executing the module.
 
 This is the readme file for our *main* module _commentSentiments_.
 We also implemented the following module, which is used to distribute the
@@ -226,7 +225,7 @@ This is the plot showing the average scores sorted by contribution.
 As you can see, this plot does not show the the neutral score, for easier
 comparison between the much lower positive and neutral values. The
 compound value is a comprehension of the "positive vs negative" value of the
-contribution. 
+contribution.
 The thin horizontal lines are the average of positive, negative and the compound
 in all contributions.
 
