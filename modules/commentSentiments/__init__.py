@@ -13,6 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
+
 def plotRatio(pp, title, ylabel, data):
     """ Method for plotting ratios explicitly written for data created during
     execution of the run method. Plots are saved into the given pdf file."""
@@ -38,7 +39,7 @@ def plotRatio(pp, title, ylabel, data):
                    color='grey', alpha=.25)
     ax.autoscale_view()
     plt.savefig(pp, format='pdf')
-    
+
 
 def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_neutral_scores=False):
     """Method for plotting sentiment scores. Neutral values can be excluded. Scores can either be non neutral average or actual average."""
