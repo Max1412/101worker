@@ -83,7 +83,7 @@ Außerdem ist es uns schwer gefallen, uns mit den anderen zwei Gruppen,
 die dieselbe Aufgabe hatten, abzusprechen. Während eine Gruppe
 sehr kommunikativ und kooperativ war und direkt vorgeschlagen hat,
 sich mit einem Machine-Learning-Ansatz von uns abzuheben, hat sich die 
-andere Gruppe bis Mittwoch (zwei Tage vor Abgabe) nicht gemeldet und dann
+andere Gruppe bis Montag (zwei Tage vor Abgabe) nicht gemeldet und dann
 auch nur sehr kurz gefasst.
 Wir hoffen, unsere Lösung hebt sich genug von den anderen ab. Wir haben
 unseren Code selbst geschrieben.

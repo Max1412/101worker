@@ -55,8 +55,7 @@ Example:
         },
         "tooShortSentences": 9,
         "nonNeutralSentences": 5
-    },
-    ...
+    }
 ```
 
 This is a subset of the complete dump, the part that contains all
