@@ -212,6 +212,7 @@ Here are the generated plots together with an analysis/evaluation of the result:
 and all following "conclusions" are drawn from the analyzed contributions only**
 
 ![Contribution comment sentiments](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/contribution_comment_sentiments.png?raw=true)
+
 This is the plot showing the average scores sorted by contribution.
 As you can see, this plot does not show the the neutral score, for easier
 comparison between the much lower positive and neutral values. The
@@ -252,6 +253,7 @@ Now we can see:
 
 We also analyzed the ratio of non-neutral comments to total comments:
 ![Developer ratio](https://github.com/Max1412/101worker/blob/master/modules/commentSentiments/ratio_non%20neutral_sentences_to%20sentences_by_developer.png?raw=true)
+
 This shows that _DerDackel_ writes not just only negative comments, but has also
 many non-neutral comments in comparison with his overall comments.
 We can also see that _tschmorleiz_ is a very neutral comment-writer.
@@ -272,7 +274,7 @@ taken into account.
 
 What we can see here is, that even with no completely neutral sentences taken into account,
 ne neutral scores outrank the positive/negative scores by far.
-This means that even the positive or negative comments are **not strongly positive or negative**
+This means that even the positive or negative comments are **not strongly positive or negative**.
 This actually confirms what we expected: Source-Code comments do not contain
 very strong sentiments, and thus are basically very neutral. This is also confirmed
 by the overall low ratios between neutral and non-neutral comments seen in the second type of figures.
