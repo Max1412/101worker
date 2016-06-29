@@ -6,7 +6,7 @@ on a per-contribution basis.
 This module is needed for our main module _commentSentiments_,
 please see its readme for more details and the rest of the documentation
 regarding results and analysis of the results.
-https://github.com/alexsr/101worker/tree/master/modules/featuresPerContribution
+https://github.com/Max1412/101worker/tree/master/modules/commentSentiments
 
 ## Assumptions
 
