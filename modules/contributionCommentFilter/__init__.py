@@ -3,7 +3,7 @@ config = {
     'wantsfiles': True,
     'threadsafe': True,
     'behavior': {
-        'creates': [['dump', 'contributionCommentFilter']],
+        'creates': [['dump', 'contributionCommentSentiments']],
         'uses': [['resource', 'lang']]
     }
     }
@@ -307,7 +307,7 @@ def run(context, res):
         # Create data dictionary and save to dump
         data[contribution] = {"scores": scores, "nonNeutralScores": scores_without_neutral, "sentences": num_sentences, "nonNeutralSentences": num_without_neutral, "tooShortSentences": num_too_short_sentences, "averageScores": average, "averageNonNeutral": average_without_neutral}
 
-        context.write_dump('contributionCommentFilter', data)
+        context.write_dump('contributionCommentSentiments', data)
     except UnicodeEncodeError:
         print("UnicodeEncodeError")
 
@@ -334,7 +334,7 @@ class ContributionCommentFilter(unittest.TestCase):
         self.env.get_derived_resource.return_value = "Python"
         self.env.get_primary_resource.return_value = primaryResource
         run(self.env, res)
-        self.env.write_dump.assert_called_with('contributionCommentFilter',   {'python': {'averageScores': {'neg': 0.07933333333333333, 'pos': 0.22566666666666668, 'neu': 0.695, 'compound': 0.0919}, 'nonNeutralSentences': 2, 'sentences': 3, 'scores': {'neg': 0.238, 'pos': 0.677, 'neu': 2.085, 'compound': 0.2757}, 'averageNonNeutral': {'neg': 0.119, 'pos': 0.3385, 'neu': 0.5425, 'compound': 0.13785}, 'tooShortSentences': 1, 'nonNeutralScores': {'neg': 0.238, 'pos': 0.677, 'neu': 1.085, 'compound': 0.2757}}})
+        self.env.write_dump.assert_called_with('contributionCommentSentiments',   {'python': {'averageScores': {'neg': 0.07933333333333333, 'pos': 0.22566666666666668, 'neu': 0.695, 'compound': 0.0919}, 'nonNeutralSentences': 2, 'sentences': 3, 'scores': {'neg': 0.238, 'pos': 0.677, 'neu': 2.085, 'compound': 0.2757}, 'averageNonNeutral': {'neg': 0.119, 'pos': 0.3385, 'neu': 0.5425, 'compound': 0.13785}, 'tooShortSentences': 1, 'nonNeutralScores': {'neg': 0.238, 'pos': 0.677, 'neu': 1.085, 'compound': 0.2757}}})
 
     def test_too_short_sentences(self):
         res = {
@@ -349,7 +349,7 @@ class ContributionCommentFilter(unittest.TestCase):
         self.env.get_derived_resource.return_value = "Python"
         self.env.get_primary_resource.return_value = primaryResource
         run(self.env, res)
-        self.env.write_dump.assert_called_with('contributionCommentFilter',   {'python': {'averageScores': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}, 'nonNeutralSentences': 0, 'sentences': 0, 'scores': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}, 'averageNonNeutral': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}, 'tooShortSentences': 4, 'nonNeutralScores': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}}})
+        self.env.write_dump.assert_called_with('contributionCommentSentiments',   {'python': {'averageScores': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}, 'nonNeutralSentences': 0, 'sentences': 0, 'scores': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}, 'averageNonNeutral': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}, 'tooShortSentences': 4, 'nonNeutralScores': {'neg': 0, 'pos': 0, 'neu': 0, 'compound': 0}}})
 
 
 
