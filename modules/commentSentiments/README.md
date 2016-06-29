@@ -173,7 +173,11 @@ Siehe Quellcode.
 
 # commentSentiments
 
-A module to ...
+A module to process the contributionCommentSentiments dump
+and combine its information with information found in the wiki,
+such as the language or contributor of a given contribution.
+This module does not just process the data, but also analyzes it and
+saves its output in graphical and non-graphical form.
 
 Necessary python packages for this module are:
 * matplotlib
@@ -193,6 +197,10 @@ The motivation to distribute the work into different modules was both to create 
 
 ## Assumptions
 
+No actual assumptions are made in this module as it is only
+processing and displaying generated data, but the module contributionCommentSentiments,
+on which this one depends makes some assumptions. Those can be read
+in its readme file, which is available at the link above.
 
 ## Details
 
@@ -205,6 +213,7 @@ Sample output, explanation
 
 This module relies on the dump from the modules _matchLanguage_ and
 _contributionCommentSentiments_ and their respective dependencies.
+It also uses the wiki-links dump.
 
 ## Issues
 
