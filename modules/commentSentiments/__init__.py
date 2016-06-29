@@ -219,31 +219,36 @@ def run(context):
         developer_sentiments[l]['averageScores'] = average_scores
         developer_sentiments[l]['averageNonNeutral'] = average_non_neutral
 
-    pp = PdfPages(context.get_env('dumps101dir') + '/commentSentiments.pdf')
-    plotSentiments(pp, "Contribution comment sentiments", "Average Scores", False, contribution_sentiments, total_scores)
-    plotSentiments(pp, "Non neutral contribution comment sentiments", "Average Scores", True, contribution_sentiments, total_non_neutral_scores, True)
-    plotRatio(pp, "Ratio non neutral sentences to sentences by contribution", "Ratio", contribution_sentiments)
-    plotSentiments(pp, "Language comment sentiments", "Average Scores", False, language_sentiments, total_scores)
-    plotSentiments(pp, "Non neutral language comment sentiments", "Average Scores", True, language_sentiments, total_non_neutral_scores, True)
-    plotRatio(pp, "Ratio non neutral sentences to sentences by language", "Ratio", language_sentiments)
-    plotSentiments(pp, "Developer comment sentiments", "Average Scores", False, developer_sentiments, total_scores)
-    plotSentiments(pp, "Non neutral developer comment sentiments", "Average Scores", True, developer_sentiments, total_non_neutral_scores, True)
-    plotRatio(pp, "Ratio non neutral sentences to sentences by developer", "Ratio", developer_sentiments)
+    try:
+        pp = PdfPages(context.get_env('dumps101dir') + '/commentSentiments.pdf')
+        plotSentiments(pp, "Contribution comment sentiments", "Average Scores", False, contribution_sentiments, total_scores)
+        plotSentiments(pp, "Non neutral contribution comment sentiments", "Average Scores", True, contribution_sentiments, total_non_neutral_scores, True)
+        plotRatio(pp, "Ratio non neutral sentences to sentences by contribution", "Ratio", contribution_sentiments)
+        plotSentiments(pp, "Language comment sentiments", "Average Scores", False, language_sentiments, total_scores)
+        plotSentiments(pp, "Non neutral language comment sentiments", "Average Scores", True, language_sentiments, total_non_neutral_scores, True)
+        plotRatio(pp, "Ratio non neutral sentences to sentences by language", "Ratio", language_sentiments)
+        plotSentiments(pp, "Developer comment sentiments", "Average Scores", False, developer_sentiments, total_scores)
+        plotSentiments(pp, "Non neutral developer comment sentiments", "Average Scores", True, developer_sentiments, total_non_neutral_scores, True)
+        plotRatio(pp, "Ratio non neutral sentences to sentences by developer", "Ratio", developer_sentiments)
 
-    pp.close()
-
+        pp.close()
+    except PermissionError:
+        print("Permission error, probably in testing")
     context.write_dump('developerCommentSentiments', developer_sentiments)
     context.write_dump('languageCommentSentiments', language_sentiments)
 
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, call
 
 
 class CommentSentiments(unittest.TestCase):
 
     def setUp(self):
         self.env = Mock()
-        self.env.read_dump.return_value = {
+        self.env.get_env.return_value = ""
+
+    def test_run(self):
+        self.env.read_dump.side_effect = [{
             "wiki": {
                 "pages": [
                     {
@@ -293,16 +298,81 @@ class CommentSentiments(unittest.TestCase):
                     }
                 ]
             }
-        }
-
-    def test_pages(self):
+        },
+        {'javaJson': {'averageScores': {'neg': 0.07933333333333333, 'pos': 0.22566666666666668, 'neu': 0.695, 'compound': 0.0919},
+        'nonNeutralSentences': 2, 'sentences': 3, 'scores': {'neg': 0.238, 'pos': 0.677, 'neu': 2.085, 'compound': 0.2757},
+        'averageNonNeutral': {'neg': 0.119, 'pos': 0.3385, 'neu': 0.5425, 'compound': 0.13785},
+        'tooShortSentences': 1, 'nonNeutralScores': {'neg': 0.238, 'pos': 0.677, 'neu': 1.085, 'compound': 0.2757}}},
+        ]
         run(self.env)
-        self.env.write_dump.assert_called_with('programmingLanguagePerContribution', {'javaJson': ['Java']})
+        calls = [call("developerCommentSentiments", {'rlaemmel': {'averageScores': {'neg': 0.07933333333333333, 'pos': 0.22566666666666668, 'neu': 0.695, 'compound': 0.0919},
+        'nonNeutralSentences': 2, 'sentences': 3, 'scores': {'neg': 0.238, 'pos': 0.677, 'neu': 2.085, 'compound': 0.2757},
+        'averageNonNeutral': {'neg': 0.119, 'pos': 0.3385, 'neu': 0.5425, 'compound': 0.13785},
+        'tooShortSentences': 1, 'nonNeutralScores': {'neg': 0.238, 'pos': 0.677, 'neu': 1.085, 'compound': 0.2757}}}), call("languageCommentSentiments", {'Java': {'averageScores': {'neg': 0.07933333333333333, 'pos': 0.22566666666666668, 'neu': 0.695, 'compound': 0.0919},
+        'nonNeutralSentences': 2, 'sentences': 3, 'scores': {'neg': 0.238, 'pos': 0.677, 'neu': 2.085, 'compound': 0.2757},
+        'averageNonNeutral': {'neg': 0.119, 'pos': 0.3385, 'neu': 0.5425, 'compound': 0.13785},
+        'tooShortSentences': 1, 'nonNeutralScores': {'neg': 0.238, 'pos': 0.677, 'neu': 1.085, 'compound': 0.2757}}})]
+        self.env.write_dump.assert_has_calls(calls)
 
-    def test_empty(self):
-        self.env.read_dump.return_value = {}
+    def test_empty_run(self):
+        self.env.read_dump.side_effect = [{
+            "wiki": {
+                "pages": [
+                    {
+                        "p": "Language",
+                         "n": "Java",
+                         "internal_links": [
+                             "OO programming language",
+                             "Technology:Java platform",
+                             "Technology:Java SE",
+                             "InstanceOf::OO programming language"
+                         ]
+                     },
+                    {
+                        "p": "Contribution",
+                        "n": "javaJson",
+                         "internal_links": [
+                             "Language:JSON",
+                             "Language:Java",
+                             "Technology:javax.json",
+                             "API",
+                             "Contribution:dom",
+                             "Contribution:jdom",
+                             "Language:JSON",
+                             "Language:XML",
+                             "Contribution:javaJsonHttp",
+                             "Technology:Gradle",
+                             "Technology:Eclipse",
+                             "Implements::Feature:Hierarchical company",
+                             "Implements::Feature:Mapping",
+                             "Implements::Feature:Parsing",
+                             "Implements::Feature:Total",
+                             "Implements::Feature:Cut",
+                             "MemberOf::Theme:Java mapping",
+                             "Uses::Language:Java",
+                             "Uses::Language:JSON",
+                             "Uses::Technology:javax.json",
+                             "Uses::Technology:JUnit",
+                             "Uses::Technology:Gradle",
+                             "DevelopedBy::Contributor:rlaemmel"
+                         ],
+                         "DevelopedBy": [
+                             {
+                                 "n": "rlaemmel",
+                                 "p": "Contributor"
+                             }
+                         ],
+                    }
+                ]
+            }
+        },
+        {},
+        ]
         run(self.env)
-        self.env.write_dump.assert_called_with('programmingLanguagePerContribution', {})
+        calls = [call("developerCommentSentiments", {}), call("languageCommentSentiments", {})]
+        self.env.write_dump.assert_has_calls(calls)
+
+
 
 def test():
     suite = unittest.TestLoader().loadTestsFromTestCase(CommentSentiments)
