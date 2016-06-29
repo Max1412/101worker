@@ -13,6 +13,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
+def plotRatio(pp, title, ylabel, data):
+    ratio = []
+    legend = []
+    for l, item_data in data.items():
+        if item_data['sentences'] > 0:
+            legend += [l]
+            ratio += [item_data['nonNeutralSentences']/item_data['sentences']]
+    fig, ax = plt.subplots()
+    fig.canvas.set_window_title(title)
+    N = len(legend)
+    elements = 1
+    width = 1.0/(1.0+elements)
+    ind = np.arange(N)
+    ratio_bar = ax.bar(ind, ratio, width, color='g')
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
+    ax.set_xticks(ind + elements/2.*width)
+    lsize = 1.0/N * 10.0 + 5.0
+    ax.set_xticklabels(legend, fontsize=lsize)
+    ax.yaxis.grid(True, linestyle='--', which='major',
+                   color='grey', alpha=.25)
+    ax.autoscale_view()
+    plt.savefig(pp, format='pdf')
 
 def plotSentiments(pp, title, ylabel, with_neutral, data, total_scores, use_non_neutral_scores=False):
     neutrals = []
@@ -107,7 +130,11 @@ def run(context):
     contribution_sentiments = context.read_dump('contributionCommentSentiments')
 
     if contribution_sentiments is None:
-        contribution_sentiments = {}
+        context.write_dump('developerCommentSentiments', {})
+        context.write_dump('languageCommentSentiments', {})
+        pp = PdfPages(context.get_env('dumps101dir') + '/commentSentiments.pdf')
+        pp.close()
+        return
 
     # total scores are used to create an overall average displayed in the bar
     # chart plotted to simplify grading of displayed data in realtion to overall
@@ -195,10 +222,13 @@ def run(context):
     pp = PdfPages(context.get_env('dumps101dir') + '/commentSentiments.pdf')
     plotSentiments(pp, "Contribution comment sentiments", "Average Scores", False, contribution_sentiments, total_scores)
     plotSentiments(pp, "Non neutral contribution comment sentiments", "Average Scores", True, contribution_sentiments, total_non_neutral_scores, True)
+    plotRatio(pp, "Ratio non neutral sentences to sentences by contribution", "Ratio", contribution_sentiments)
     plotSentiments(pp, "Language comment sentiments", "Average Scores", False, language_sentiments, total_scores)
     plotSentiments(pp, "Non neutral language comment sentiments", "Average Scores", True, language_sentiments, total_non_neutral_scores, True)
+    plotRatio(pp, "Ratio non neutral sentences to sentences by language", "Ratio", language_sentiments)
     plotSentiments(pp, "Developer comment sentiments", "Average Scores", False, developer_sentiments, total_scores)
     plotSentiments(pp, "Non neutral developer comment sentiments", "Average Scores", True, developer_sentiments, total_non_neutral_scores, True)
+    plotRatio(pp, "Ratio non neutral sentences to sentences by developer", "Ratio", developer_sentiments)
 
     pp.close()
 
@@ -253,7 +283,7 @@ class CommentSentiments(unittest.TestCase):
                              "Uses::Technology:JUnit",
                              "Uses::Technology:Gradle",
                              "DevelopedBy::Contributor:rlaemmel"
-                         ]
+                         ],
                     }
                 ]
             }
