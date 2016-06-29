@@ -246,7 +246,7 @@ class CommentSentiments(unittest.TestCase):
     def setUp(self):
         self.env = Mock()
         self.env.get_env.return_value = ""
-        self.env.testing.return_value
+
     def test_run(self):
         self.env.read_dump.side_effect = [{
             "wiki": {
